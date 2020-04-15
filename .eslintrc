@@ -1,0 +1,31 @@
+{
+  "env": {
+	"es6": true,
+	"node": true
+  },
+  "extends": [
+	"plugin:@typescript-eslint/recommended",
+	"plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+	"project": "tsconfig.json",
+	"sourceType": "module"
+  },
+  "plugins": [
+	"@typescript-eslint"
+  ],
+  "rules": {
+	"@typescript-eslint/interface-name-prefix": [
+	  "warn",
+	  {
+		"prefixWithI": "always"
+	  }
+	],
+	"camelcase": "off",
+	"@typescript-eslint/camelcase": "off",
+	"prefer-const": "warn",
+	"@typescript-eslint/member-delimiter-style": "off",
+	"@typescript-eslint/ban-ts-ignore": "off"
+  }
+}

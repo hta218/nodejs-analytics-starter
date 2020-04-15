@@ -29,7 +29,7 @@ if (!MONGODB_URI) {
 	process.exit(1)
 }
 
-export const publicPath = path.join(__dirname, '../../public')
+export const publicPath = path.join(__dirname, '../public')
 
 
 

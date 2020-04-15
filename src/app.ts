@@ -54,4 +54,8 @@ app.use(express.static(path.join(__dirname, "public"), { maxAge: 31557600000 }))
 
 app.use("/api", apiRouter);
 
+app.get("/", (req, res) => {
+	res.sendFile(path.join(__dirname, "public/", "index.html"))
+})
+
 export default app;

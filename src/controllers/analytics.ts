@@ -3,6 +3,7 @@ import { getAnalyticsData, saveSession } from '../models/Analytics'
 import { saveEvent } from '../models/AnalyticsEvent'
 import { fillAnalyticsData } from '../util/helpers'
 import { verifyReq } from '../util/middleware'
+import { format, add, sub } from 'date-fns'
 
 const router = express.Router()
 const TRANSPARENT_GIF_BUFFER = Buffer.from('R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=', 'base64')
@@ -48,14 +49,17 @@ router.get('/collect', async (req, res) => {
 })
 
 router.get("/data", [verifyReq], async (req: Request, res: Response) => {
-  const { shopDomain, startDate, endDate } = req.query;
+	const { shopDomain } = req.query;
+	const startDate = format(sub(new Date(), { days: 1 }), "yyyy-MM-dd")
+	const endDate = format(add(new Date(), { days: 1 }), "yyyy-MM-dd")
+
   try {
-    const pfAnalytics: any = await getAnalyticsData(shopDomain, startDate, endDate);
-    const data = fillAnalyticsData(pfAnalytics, startDate, endDate);
+    const raw: any = await getAnalyticsData(shopDomain, startDate, endDate);
+    const data = fillAnalyticsData(raw, startDate, endDate);
 
     res.json({ success: 1, data });
   } catch (err) {
-    console.error("PF Analytics Error :::: ", shopDomain, err);
+    console.error("Analytics Error :::: ", shopDomain, err);
     res.json({ success: 0, err: err.toString() });
   }
 });
